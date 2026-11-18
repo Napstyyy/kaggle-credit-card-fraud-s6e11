@@ -34,7 +34,7 @@ def fit_lgb(Xtr, ytr, Xva, yva):
         subsample=0.8, subsample_freq=1, colsample_bytree=0.5, reg_lambda=5.0,
         max_cat_to_onehot=16, random_state=SEED, verbose=-1,
     )
-    m.fit(Xtr, ytr, eval_set=[(Xva, yva)], eval_metric="auc",
+    m.fit(Xtr, ytr, eval_X=(Xva,), eval_y=(yva,), eval_metric="auc",
           callbacks=[early_stopping(200, verbose=False), log_evaluation(0)])
     return m, lambda X: m.predict_proba(X)[:, 1]
 
